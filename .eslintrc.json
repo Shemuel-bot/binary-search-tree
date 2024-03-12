@@ -13,6 +13,10 @@
     },
     "rules": {
         "no-console": "off",
-       "import/prefer-default-export":"warn"
+       "import/prefer-default-export":"warn",
+       "max-classes-per-file": [
+        "error",
+        { "ignoreExpressions": true, "max": 2 }
+    ]
     }
 }
