@@ -7,13 +7,13 @@ class Node{
 }
 
 class Tree{
-    constructor(){
-        this.root = null;
+    constructor(array = []){
+        this.root = this.buildTree(array);
     }
 
     buildTree(array = []){
         const leaf = new Node(array.shift());
-        if(array.length  <= 1)return leaf
+        if(array.length  <= 0)return leaf
         const leftSide = [];
         const rightSide = [];
         for (let i = 0; i < array.length; i+=1) {
@@ -31,4 +31,18 @@ class Tree{
     }
     
 }
-const a = new Tree();
+const a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+    if (node === null) {
+      return;
+    }
+    if (node.rightChild !== null) {
+      prettyPrint(node.rightChild, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.leftChild !== null) {
+      prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  };
+prettyPrint(a.root);
+ 
