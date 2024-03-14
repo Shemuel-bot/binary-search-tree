@@ -31,19 +31,23 @@ class Tree {
   insert(value, node = null) {
     if (node === null) {
       if (value < this.root.data) {
-        if (this.root.leftChild === null) {
+        if (this.root.leftChild.data === undefined) {
           this.root.leftChild = new Node(value);
         } else {
           this.root.leftChild = this.insert(value, this.root.leftChild);
         }
-      } else if (this.root.rightChild === null) {
+      } else if (this.root.rightChild.data === undefined) {
         this.root.rightChild = new Node(value);
       } else {
         this.root.rightChild = this.insert(value, this.root.rightChild);
       }
     } else {
       if (value < node.data) {
-        if (node.leftChild === null) {
+        if (node.leftChild.data === null) {
+            node.leftChild = new Node(value);
+            return node;
+          }
+        if (node.leftChild.data === undefined) {
           node.leftChild = new Node(value);
           return node;
         }
@@ -51,7 +55,12 @@ class Tree {
         return node;
       }
       if (value > node.data) {
+        console.log(node);
         if (node.rightChild === null) {
+            node.rightChild = new Node(value);
+            return node;
+          }
+        if (node.rightChild.data === undefined) {
           node.rightChild = new Node(value);
           return node;
         }
@@ -63,17 +72,18 @@ class Tree {
 }
 const a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.rightChild !== null) {
-    prettyPrint(node.rightChild, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.leftChild !== null) {
-    prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-prettyPrint(a.root);
-a.insert(0);
+    if (node === null) {
+      return;
+    }
+    if (node.rightChild !== null) {
+      prettyPrint(node.rightChild, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.leftChild !== null) {
+      prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  };
+ 
+a.insert(10);
+a.insert(11);
 prettyPrint(a.root);
