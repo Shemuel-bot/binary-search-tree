@@ -61,7 +61,8 @@ class Tree {
     if (root.data > value) {
       root.leftChild = this.deleteNode(root.leftChild, value);
       return root;
-    } if (root.data < value) {
+    }
+    if (root.data < value) {
       root.rightChild = this.deleteNode(root.rightChild, value);
       return root;
     }
@@ -69,46 +70,59 @@ class Tree {
     if (root.leftChild === null) {
       const temp = root.rightChild;
       return temp;
-    } if (root.rightChild === null) {
+    }
+    if (root.rightChild === null) {
       const temp = root.leftChild;
       return temp;
-    } 
-      let succParent = root;
+    }
+    let succParent = root;
 
-      let succ = root.rightChild;
-      while (succ.leftChild !== null) {
-        if(succ.leftChild.data !== undefined){
+    let succ = root.rightChild;
+    while (succ.leftChild !== null) {
+      if (succ.leftChild.data !== undefined) {
         succParent = succ;
         succ = succ.leftChild;
-        }else break
-      }
+      } else break;
+    }
 
-      if (succParent !== root) {
-        succParent.leftChild = succ.rightChild;
-      } else {
-        succParent.rightChild = succ.rightChild;
-      }
+    if (succParent !== root) {
+      succParent.leftChild = succ.rightChild;
+    } else {
+      succParent.rightChild = succ.rightChild;
+    }
 
-      root.data = succ.data;
-      return root;
-    
+    root.data = succ.data;
+    return root;
   }
 
-  find(value, node = this.root){
-    if(node === null){
-      return null
+  find(value, node = this.root) {
+    if (node === null) {
+      return null;
     }
 
-    if(node.data === value){
-      return node
+    if (node.data === value) {
+      return node;
     }
 
-    if(node.data < value){
-      return this.find(value, node.rightChild)
+    if (node.data < value) {
+      return this.find(value, node.rightChild);
     }
-    if(node.data > value){
+    if (node.data > value) {
       return this.find(value, node.leftChild);
     }
+  }
+
+  levelOrder() {
+    const queue = [];
+    queue.push(this.root);
+    for (let i = 0; i < queue.length; i += 1) {
+      if (queue[i].leftChild)
+        if (queue[i].leftChild.data) queue.push(queue[i].leftChild);
+
+      if (queue[i].rightChild)
+        if (queue[i].rightChild.data) queue.push(queue[i].rightChild);
+    }
+    return queue;
   }
 }
 
@@ -128,7 +142,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-a.delete(7);
-a.insert(69);
-prettyPrint(a.root);
-console.log(a.find(69));
+console.log(a.levelOrder());
