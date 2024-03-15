@@ -141,7 +141,7 @@ class Tree {
 
   preOrder(node = this.root) {
     let array = [];
-    array.push(node.data);
+    array.push(node);
     if (node.leftChild !== null)
       if (node.leftChild.data !== undefined)
         array = array.concat(this.preOrder(node.leftChild));
@@ -149,6 +149,20 @@ class Tree {
     if (node.rightChild !== null)
       if (node.rightChild.data !== undefined)
         array = array.concat(this.preOrder(node.rightChild));
+    return array;
+  }
+
+  postOrder(node = this.root) {
+    let array = [];
+    if (node.leftChild !== null)
+      if (node.leftChild.data !== undefined)
+        array = array.concat(this.postOrder(node.leftChild));
+
+    if (node.rightChild !== null)
+      if (node.rightChild.data !== undefined)
+        array = array.concat(this.postOrder(node.rightChild));
+      
+    array.push(node);
     return array;
   }
 }
@@ -169,4 +183,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-console.log(a.preOrder());
+console.log(a.postOrder());
