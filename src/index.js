@@ -124,9 +124,25 @@ class Tree {
     }
     return queue;
   }
+
+  inOrder(node = this.root){
+    let array = [];
+    if(node.leftChild !== null){
+      if(node.leftChild.data !== undefined){
+        array = array.concat(this.inOrder(node.leftChild));
+      }
+    }
+    array.push(node);
+    if(node.rightChild!== null){
+      if(node.rightChild.data !== undefined){
+        array = array.concat(this.inOrder(node.rightChild));
+      }
+    }
+    return array
+  }
 }
 
-const a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+const a = new Tree([10, 4, 23, 8, 9, 1, 4, 3, 5, 7, 9, 67, 6345, 324]);
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -142,4 +158,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-console.log(a.levelOrder());
+console.log(a.inOrder());
