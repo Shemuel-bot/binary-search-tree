@@ -125,20 +125,31 @@ class Tree {
     return queue;
   }
 
-  inOrder(node = this.root){
+  inOrder(node = this.root) {
     let array = [];
-    if(node.leftChild !== null){
-      if(node.leftChild.data !== undefined){
+    if (node.leftChild !== null)
+      if (node.leftChild.data !== undefined)
         array = array.concat(this.inOrder(node.leftChild));
-      }
-    }
+
     array.push(node);
-    if(node.rightChild!== null){
-      if(node.rightChild.data !== undefined){
+    if (node.rightChild !== null)
+      if (node.rightChild.data !== undefined)
         array = array.concat(this.inOrder(node.rightChild));
-      }
-    }
-    return array
+
+    return array;
+  }
+
+  preOrder(node = this.root) {
+    let array = [];
+    array.push(node.data);
+    if (node.leftChild !== null)
+      if (node.leftChild.data !== undefined)
+        array = array.concat(this.preOrder(node.leftChild));
+
+    if (node.rightChild !== null)
+      if (node.rightChild.data !== undefined)
+        array = array.concat(this.preOrder(node.rightChild));
+    return array;
   }
 }
 
@@ -158,4 +169,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-console.log(a.inOrder());
+console.log(a.preOrder());
