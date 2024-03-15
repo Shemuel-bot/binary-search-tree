@@ -93,6 +93,23 @@ class Tree {
       return root;
     
   }
+
+  find(value, node = this.root){
+    if(node === null){
+      return null
+    }
+
+    if(node.data === value){
+      return node
+    }
+
+    if(node.data < value){
+      return this.find(value, node.rightChild)
+    }
+    if(node.data > value){
+      return this.find(value, node.leftChild);
+    }
+  }
 }
 
 const a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -112,4 +129,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 prettyPrint(a.root);
 a.delete(7);
+a.insert(69);
 prettyPrint(a.root);
+console.log(a.find(69));
