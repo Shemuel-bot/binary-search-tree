@@ -226,22 +226,10 @@ class Tree {
     }
   }
 }
-
-const a = new Tree([1, 4, 23, 8, 9, 10, 4, 3, 5, 7, 9, 67, 6345, 324]);
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  // console.log(node);
-  if (node.rightChild !== null) {
-    prettyPrint(node.rightChild, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.leftChild !== null) {
-    prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-
-prettyPrint(a.root);
-a.reBalance();
-prettyPrint(a.root);
+function RandomArray(length = 16, maxValue = 100) {
+  const array = Array(length);
+  for (let i = 0; i < array.length; i += 1)
+    array[i] = Math.floor(Math.random() * maxValue);
+  return array;
+}
+console.log(RandomArray(16));
