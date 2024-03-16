@@ -161,9 +161,28 @@ class Tree {
     if (node.rightChild !== null)
       if (node.rightChild.data !== undefined)
         array = array.concat(this.postOrder(node.rightChild));
-      
+
     array.push(node);
     return array;
+  }
+
+  height(node = this.root, last = true) {
+    let leftTallest = 1;
+    let rightTallest = 1;
+    if (node.leftChild !== null)
+      if (node.leftChild.data !== undefined)
+        leftTallest += this.height(node.leftChild, false);
+
+    if (node.rightChild !== null)
+      if (node.rightChild.data !== undefined)
+        rightTallest += this.height(node.rightChild, false);
+
+    if (leftTallest > rightTallest)
+      if (last) return leftTallest - 1;
+      else return leftTallest;
+
+    if (last) return rightTallest - 1;
+    return rightTallest;
   }
 }
 
@@ -183,4 +202,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-console.log(a.postOrder());
+console.log(a.height(a.find(10)));
