@@ -1,3 +1,5 @@
+const { node } = require("webpack");
+
 class Node {
   constructor(data, leftChild = null, rightChild = null) {
     this.data = data;
@@ -112,58 +114,63 @@ class Tree {
     }
   }
 
-  levelOrder() {
+  levelOrder(callback = null) {
     const queue = [];
     queue.push(this.root);
     for (let i = 0; i < queue.length; i += 1) {
+      if(callback) callback(queue[i]);
       if (queue[i].leftChild)
         if (queue[i].leftChild.data) queue.push(queue[i].leftChild);
 
       if (queue[i].rightChild)
         if (queue[i].rightChild.data) queue.push(queue[i].rightChild);
     }
-    return queue;
+    if(!callback)return queue;
   }
 
-  inOrder(node = this.root) {
+  inOrder(callback = null, node = this.root) {
     let array = [];
+    if(callback) callback(node)
     if (node.leftChild !== null)
       if (node.leftChild.data !== undefined)
-        array = array.concat(this.inOrder(node.leftChild));
+        array = array.concat(this.inOrder(callback, node.leftChild));
 
     array.push(node.data);
     if (node.rightChild !== null)
       if (node.rightChild.data !== undefined)
-        array = array.concat(this.inOrder(node.rightChild));
+        array = array.concat(this.inOrder(callback, node.rightChild));
+      
 
-    return array;
+    if(!callback)return array;
   }
 
-  preOrder(node = this.root) {
+  preOrder(callback = null, node = this.root) {
     let array = [];
+    if(callback) callback(node)
     array.push(node.data);
     if (node.leftChild !== null)
       if (node.leftChild.data !== undefined)
-        array = array.concat(this.preOrder(node.leftChild));
+        array = array.concat(this.preOrder(callback, node.leftChild));
 
     if (node.rightChild !== null)
       if (node.rightChild.data !== undefined)
-        array = array.concat(this.preOrder(node.rightChild));
-    return array;
+        array = array.concat(this.preOrder(callback, node.rightChild));
+    if(!callback)return array;
   }
 
-  postOrder(node = this.root) {
+  postOrder(callback = null, node = this.root) {
     let array = [];
+    if(callback) callback(node)
     if (node.leftChild !== null)
       if (node.leftChild.data !== undefined)
-        array = array.concat(this.postOrder(node.leftChild));
+        array = array.concat(this.postOrder(callback, node.leftChild));
 
     if (node.rightChild !== null)
       if (node.rightChild.data !== undefined)
-        array = array.concat(this.postOrder(node.rightChild));
+        array = array.concat(this.postOrder(callback, node.rightChild));
 
     array.push(node.data);
-    return array;
+    if(!callback)return array;
   }
 
   height(node = this.root, last = true) {
@@ -232,4 +239,4 @@ function RandomArray(length = 16, maxValue = 100) {
     array[i] = Math.floor(Math.random() * maxValue);
   return array;
 }
-console.log(RandomArray(16));
+
