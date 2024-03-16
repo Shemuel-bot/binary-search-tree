@@ -184,6 +184,22 @@ class Tree {
     if (last) return rightTallest - 1;
     return rightTallest;
   }
+
+  depth(node, next = this.root) {
+    let depthSize = 0;
+    if (this.root === node) return depthSize;
+
+    if (next.leftChild !== null)
+      if (next.leftChild.data !== undefined)
+        depthSize += this.depth(node, next.leftChild);
+    if (next.rightChild !== null)
+      if (next.rightChild.data !== undefined)
+        depthSize += this.depth(node, next.rightChild);
+  
+    if (next === node) depthSize += 1;
+    else if(depthSize !== 0 && next !== this.root) depthSize += 1
+    return depthSize;
+  }
 }
 
 const a = new Tree([10, 4, 23, 8, 9, 1, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -202,4 +218,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-console.log(a.height(a.find(10)));
+
