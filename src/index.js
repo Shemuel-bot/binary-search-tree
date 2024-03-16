@@ -131,7 +131,7 @@ class Tree {
       if (node.leftChild.data !== undefined)
         array = array.concat(this.inOrder(node.leftChild));
 
-    array.push(node);
+    array.push(node.data);
     if (node.rightChild !== null)
       if (node.rightChild.data !== undefined)
         array = array.concat(this.inOrder(node.rightChild));
@@ -141,7 +141,7 @@ class Tree {
 
   preOrder(node = this.root) {
     let array = [];
-    array.push(node);
+    array.push(node.data);
     if (node.leftChild !== null)
       if (node.leftChild.data !== undefined)
         array = array.concat(this.preOrder(node.leftChild));
@@ -162,7 +162,7 @@ class Tree {
       if (node.rightChild.data !== undefined)
         array = array.concat(this.postOrder(node.rightChild));
 
-    array.push(node);
+    array.push(node.data);
     return array;
   }
 
@@ -205,12 +205,29 @@ class Tree {
     const leftSide = this.height(this.root.leftChild);
     const rightSide = this.height(this.root.rightChild);
 
-    if (leftSide === rightSide || leftSide + 1 === rightSide || rightSide + 1 === leftSide) return true;
+    if (
+      leftSide === rightSide ||
+      leftSide + 1 === rightSide ||
+      rightSide + 1 === leftSide
+    )
+      return true;
     return false;
+  }
+
+  reBalance() {
+    if (!this.isBalanced()) {
+      const array = this.inOrder();
+
+      for (let i = 0; i < array.length; i += 1) {
+        this.root = this.buildTree(array);
+        if (this.isBalanced()) break;
+        array.push(array.shift());
+      }
+    }
   }
 }
 
-const a = new Tree([10, 4, 23, 8, 9, 1, 4, 3, 5, 7, 9, 67, 6345, 324]);
+const a = new Tree([1, 4, 23, 8, 9, 10, 4, 3, 5, 7, 9, 67, 6345, 324]);
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -226,4 +243,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-console.log(a.isBalanced());
+a.reBalance();
+prettyPrint(a.root);
