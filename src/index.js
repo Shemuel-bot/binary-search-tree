@@ -195,10 +195,18 @@ class Tree {
     if (next.rightChild !== null)
       if (next.rightChild.data !== undefined)
         depthSize += this.depth(node, next.rightChild);
-  
+
     if (next === node) depthSize += 1;
-    else if(depthSize !== 0 && next !== this.root) depthSize += 1
+    else if (depthSize !== 0 && next !== this.root) depthSize += 1;
     return depthSize;
+  }
+
+  isBalanced() {
+    const leftSide = this.height(this.root.leftChild);
+    const rightSide = this.height(this.root.rightChild);
+
+    if (leftSide === rightSide || leftSide + 1 === rightSide || rightSide + 1 === leftSide) return true;
+    return false;
   }
 }
 
@@ -218,4 +226,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(a.root);
-
+console.log(a.isBalanced());
